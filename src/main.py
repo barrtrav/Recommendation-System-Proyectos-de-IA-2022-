@@ -48,7 +48,7 @@ Choose a data set:
 
 while True:
     ds = int(input('Enter option number:'))
-    if ds == 1 or model == 2:break
+    if ds == 1 or ds == 2:break
 
 print()
 user = int(input('Enter number of item:'))

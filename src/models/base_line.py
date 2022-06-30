@@ -8,16 +8,18 @@ warnings.filterwarnings('ignore')
 
 def base_line(df_ratings = None, query = 0, name = 'movie'):
     if df_ratings is None: df_ratings = pd.read_csv('../resource/ratings.csv')
-
     data, _, _ = encode_user_item(df_ratings)
     
     train, test = random_split(data, [0.75, 0.25])
     
-    predictions_ratings = average_rating_model(train)
-    predictions_ranking = popular_item_model(train)
-    
-    rating_evaluate_df = pd.merge(test, predictions_ratings, on=['user_index'], how='inner')
-    ranking_top_k = recommend_top_k(data, train, predictions_ranking, 10)
+    try:
+        ranking_top_k = pd.read_csv(f'../cache/{name}/base_line/ranking_top_k.csv')
+    except FileNotFoundError:
+        predictions_ratings = average_rating_model(train)
+        predictions_ranking = popular_item_model(train)
+        rating_evaluate_df = pd.merge(test, predictions_ratings, on=['user_index'], how='inner')
+        ranking_top_k = recommend_top_k(data, train, predictions_ranking, 10)
+        ranking_top_k.to_csv(f'../cache/{name}/base_line/ranking_top_k.csv')
 
     eval_precision = precision_at_k(test, ranking_top_k, k = 10)
     eval_recall = recall_at_k(test, ranking_top_k, k = 10)
