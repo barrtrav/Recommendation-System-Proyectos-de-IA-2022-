@@ -2,7 +2,7 @@
 
 ## Objetivo
 Para construir un sistema de recomendación para los clientes de productos,
-videos y transmisión de música, y más, con la ayuda de ANN, data mining,
+videos y transmisión de música, y más, con la ayuda de ANN,
 máquina de aprendizajey programación.
 
 ## Problema
